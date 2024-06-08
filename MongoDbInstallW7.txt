@@ -1,0 +1,114 @@
+> use myNewDatabase
+switched to db myNewDatabase
+> db.myCollection.insert({name:"John",age:30,status:"A"})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+local          0.078GB
+myNewDatabase  0.078GB
+> show collections
+myCollection
+system.indexes
+> db.myCollection.find()
+{ "_id" : ObjectId("6661b146a795bcb36f49a9c5"), "name" : "John", "age" : 30, "st
+atus" : "A" }
+>
+By following these steps, you have successfully created a database, added a collection,
+ and inserted documents into MongoDB. Let me know if you have any further questions
+ -----------
+ commands
+ open cmd run
+ net start MongoDB
+1. mongod --config "C:\Program Files (x86)\MongoDB\mongod.cfg"
+open 2nd cmd prompt run
+command 1.cd "C:\Program Files (x86)\MongoDB\Server\3.0\bin"
+command 2.mongo
+-------------------------------------------
+Installing MongoDB 3.4.0 on Windows 7 involves a series of steps, including extracting the ZIP file, setting up the MongoDB directories, and configuring the MongoDB service. Below is a step-by-step guide to installing and running MongoDB 3.4.0 on Windows 7:
+
+Step-by-Step Installation Guide
+1. Extract the MongoDB ZIP File:
+Download the ZIP File: Ensure you have the MongoDB 3.4.0 ZIP file.
+Extract the ZIP File: Right-click the ZIP file and select “Extract All…” or use an extraction tool like 7-Zip to extract it to a convenient location, such as C:\MongoDB.
+2. Set Up the Directory Structure:
+Create Directories:
+
+Open the Command Prompt with administrative privileges.
+
+Create the necessary directories for MongoDB data and logs:
+
+bash
+Copy code
+mkdir C:\MongoDB\data\db
+mkdir C:\MongoDB\log
+Move the Extracted Files:
+
+Navigate to the extracted MongoDB folder and move its contents to C:\MongoDB:
+
+bash
+Copy code
+move <extracted-folder-path>\* C:\MongoDB\
+3. Configure MongoDB:
+Create a Configuration File:
+
+Open Notepad or another text editor.
+
+Add the following configuration and save it as mongod.cfg in C:\MongoDB:
+
+yaml
+Copy code
+systemLog:
+    destination: file
+    path: "C:\\MongoDB\\log\\mongod.log"
+    logAppend: true
+storage:
+    dbPath: "C:\\MongoDB\\data\\db"
+net:
+    bindIp: 127.0.0.1
+    port: 27017
+Ensure the paths use double backslashes (\) as shown above.
+
+4. Add MongoDB to System PATH:
+Set Environment Variables:
+Right-click on "Computer" or "This PC" and select “Properties.”
+Go to “Advanced system settings” and click “Environment Variables.”
+Under “System variables,” select the Path variable and click “Edit.”
+Add ;C:\MongoDB\bin to the end of the variable value (ensure you use a semicolon to separate it from existing entries).
+5. Install MongoDB as a Windows Service (Optional):
+Run the following command in Command Prompt with administrative privileges:
+
+bash
+Copy code
+"C:\MongoDB\bin\mongod.exe" --config "C:\MongoDB\mongod.cfg" --install
+This will install MongoDB as a Windows service, which allows it to start automatically.
+6. Start the MongoDB Service:
+Start the Service Manually:
+
+bash
+Copy code
+net start MongoDB
+To stop the service:
+
+bash
+Copy code
+net stop MongoDB
+7. Run MongoDB Server Manually (If not using as a service):
+Open a new Command Prompt window with administrative privileges.
+
+Navigate to MongoDB Directory:
+
+bash
+Copy code
+cd C:\MongoDB\bin
+Start the MongoDB Server:
+
+Connect to MongoDB Shell:
+
+bash
+Copy code
+mongo
+Run the following command to verify the MongoDB version:
+
+javascript
+Copy code
+db.version()
+This should return 3.4.0, indicating that the installation was successful.

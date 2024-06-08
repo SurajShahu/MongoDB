@@ -1,0 +1,96 @@
+// Switching to employee database
+use employee
+// Output: switched to db employee
+
+// Inserting a document in emp1 collection
+db.emp1.insertOne({firstName: "Shyam", lastName: "Yadav", email: "shyam@gmail.com", password: "pass123", salary: 20000})
+// Output: { "acknowledged" : true, "insertedId" : ObjectId("...") }
+
+// Inserting multiple documents in emp1 collection
+db.emp1.insertMany([
+    {firstName: "Uday", lastName: "Dabi", email: "uday@gmail.com", password: "pass123", salary: 32000},
+    {firstName: "Anish", lastName: "Malwiya", email: "anish@gmail.com", password: "pass123", salary: 25000},
+    {firstName: "Rahul", lastName: "Gour", email: "rahul@gmail.com", password: "pass123", salary: 45000}
+])
+// Output: { "acknowledged" : true, "insertedIds" : [ ObjectId("..."), ObjectId("..."), ObjectId("...") ] }
+
+// Finding all documents in emp1 collection
+db.emp1.find()
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Shyam", "lastName" : "Yadav", "email" : "shyam@gmail.com", "password" : "pass123", "salary" : 20000 }
+// { "_id" : ObjectId("..."), "firstName" : "Uday", "lastName" : "Dabi", "email" : "uday@gmail.com", "password" : "pass123", "salary" : 32000 }
+// { "_id" : ObjectId("..."), "firstName" : "Anish", "lastName" : "Malwiya", "email" : "anish@gmail.com", "password" : "pass123", "salary" : 25000 }
+// { "_id" : ObjectId("..."), "firstName" : "Rahul", "lastName" : "Gour", "email" : "rahul@gmail.com", "password" : "pass123", "salary" : 45000 }
+
+// Switching to student database
+use student
+// Output: switched to db student
+
+// Inserting a document in student collection
+db.student.insertOne({firstName: "Suraj", salary: 20000})
+// Output: { "acknowledged" : true, "insertedId" : ObjectId("...") }
+
+// Inserting multiple documents in student collection
+db.student.insertMany([
+    {firstName: "Ram", salary: 32000},
+    {firstName: "Uday", salary: 22000},
+    {firstName: "Sam", salary: 35000}
+])
+// Output: { "acknowledged" : true, "insertedIds" : [ ObjectId("..."), ObjectId("..."), ObjectId("...") ] }
+
+// Finding all documents in student collection
+db.student.find()
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Suraj", "salary" : 20000 }
+// { "_id" : ObjectId("..."), "firstName" : "Ram", "salary" : 32000 }
+// { "_id" : ObjectId("..."), "firstName" : "Uday", "salary" : 22000 }
+// { "_id" : ObjectId("..."), "firstName" : "Sam", "salary" : 35000 }
+
+// Updating a document in student collection
+db.student.updateOne({firstName: "Ram"}, {$set: {salary: 21000}})
+// Output: { "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+// Updating multiple documents in student collection
+db.student.updateMany({salary: {$lt: 25000}}, {$set: {department: "staff"}})
+// Output: { "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+
+// Finding documents with limit
+db.student.find().limit(2)
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Suraj", "salary" : 20000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Ram", "salary" : 21000, "department" : "staff" }
+
+// Finding documents with limit and skip
+db.student.find().limit(3).skip(2)
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Uday", "salary" : 22000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Sam", "salary" : 35000 }
+
+// Sorting documents by salary in descending order
+db.student.find().sort({salary: -1})
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Sam", "salary" : 35000 }
+// { "_id" : ObjectId("..."), "firstName" : "Uday", "salary" : 22000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Ram", "salary" : 21000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Suraj", "salary" : 20000, "department" : "staff" }
+
+// Sorting documents by salary in ascending order
+db.student.find().sort({salary: 1})
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Suraj", "salary" : 20000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Ram", "salary" : 21000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Uday", "salary" : 22000, "department" : "staff" }
+// { "_id" : ObjectId("..."), "firstName" : "Sam", "salary" : 35000 }
+
+// Deleting a document from student collection
+db.student.deleteOne({firstName: "Sam"})
+// Output: { "acknowledged" : true, "deletedCount" : 1 }
+
+// Deleting multiple documents from student collection
+db.student.deleteMany({salary: {$lt: 21500}})
+// Output: { "acknowledged" : true, "deletedCount" : 2 }
+
+// Finding remaining documents in student collection
+db.student.find()
+// Output:
+// { "_id" : ObjectId("..."), "firstName" : "Uday", "salary" : 22000, "department" : "staff" }
